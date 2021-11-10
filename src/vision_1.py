@@ -128,3 +128,48 @@ class image_converter:
 
 
       print(e)
+
+  # Calculate the relevant joint angles from the image
+  def detect_joint_angles_1(self,image):
+    a = self.pixel2meter(image)
+    # Obtain the centre of each coloured blob
+    greenPos = a * self.detect_green(image)
+    yellowPos = a * self.detect_yellow(image)
+    bluePos = a * self.detect_blue(image)
+    redPos = a * self.detect_red(image)
+    # Solve using trigonometry
+    ja3 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
+    return np.array([ja3])
+    # ja1 = np.arctan2(greenPos[0]- yellowPos[0], greenPos[1] - yellowPos[1])
+    # ja2 = np.arctan2(yellowPos[0]-bluePos[0], yellowPos[1]-bluePos[1]) - ja1
+    # ja3 = np.arctan2(redPos[0]-bluePos[0], redPos[1]-bluePos[1]) - ja2 - ja1
+    # return np.array([ja1, ja2, ja3])
+
+  def detect_joint_angles_2(self,image):
+    a = self.pixel2meter(image)
+    # Obtain the centre of each coloured blob
+    greenPos = a * self.detect_green(image)
+    yellowPos = a * self.detect_yellow(image)
+    bluePos = a * self.detect_blue(image)
+    redPos = a * self.detect_red(image)
+    # Solve using trigonometry
+    ja2 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
+    ja4 = np.arctan2(redPos[0] - bluePos[0], redPos[1] - bluePos[1])
+    return np.array([ja2, ja4])
+    # ja1 = np.arctan2(greenPos[0]- yellowPos[0], greenPos[1] - yellowPos[1])
+    # ja2 = np.arctan2(yellowPos[0]-bluePos[0], yellowPos[1]-bluePos[1]) - ja1
+    # ja3 = np.arctan2(redPos[0]-bluePos[0], redPos[1]-bluePos[1]) - ja2 - ja1
+    # return np.array([ja1, ja2, ja3])
+
+# call the class
+def main(args):
+  ic = image_converter()
+  try:
+    rospy.spin()
+  except KeyboardInterrupt:
+    print("Shutting down")
+  cv2.destroyAllWindows()
+
+# run the code if the node is called
+if __name__ == '__main__':
+    main(sys.argv)

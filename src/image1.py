@@ -24,7 +24,7 @@ class image_converter:
     self.bridge = CvBridge()
 
 
-  # Recieve data from camera 1, process it, and publish 
+  # Recieve data from camera 1, process it, and publish
   def callback1(self,data):
     # Recieve the image
     try:

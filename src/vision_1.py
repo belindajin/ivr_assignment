@@ -25,6 +25,10 @@ class image_converter:
 >>>>>>> added init node
     # initialize the bridge between openCV and ROS
     self.bridge = CvBridge()
+    # initialize a publisher to send messages to a topic named image_topic
+    self.image_pub = rospy.Publisher("image_topic", Image, queue_size=1)
+    # initialize a publisher to send joints' angular position to a topic called joints_pos
+    self.joints_pub = rospy.Publisher("joints_pos", Float64MultiArray, queue_size=10)
     # initialize a subscriber to recieve messages rom a topic named /robot/camera1/image_raw and use callback function to recieve data
     self.image_sub1 = rospy.Subscriber("/camera1/robot/image_raw",Image, self.camera1_callback)
     self.image_sub2 = rospy.Subscriber("/camera2/robot/image_raw",Image, self.camera2_callback)

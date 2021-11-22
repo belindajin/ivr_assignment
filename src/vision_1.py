@@ -146,6 +146,7 @@ class image_converter:
     bluePos = a * self.detect_blue(image)
     redPos = a * self.detect_red(image)
     # Solve using trigonometry
+<<<<<<< HEAD
     ja3 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
     return np.array([ja3])
     # ja1 = np.arctan2(greenPos[0]- yellowPos[0], greenPos[1] - yellowPos[1])
@@ -168,6 +169,43 @@ class image_converter:
     # ja2 = np.arctan2(yellowPos[0]-bluePos[0], yellowPos[1]-bluePos[1]) - ja1
     # ja3 = np.arctan2(redPos[0]-bluePos[0], redPos[1]-bluePos[1]) - ja2 - ja1
     # return np.array([ja1, ja2, ja3])
+=======
+    ja1 = np.arctan2(center[0]- circle1Pos[0], center[1] - circle1Pos[1])
+    ja2 = np.arctan2(circle1Pos[0]-circle2Pos[0], circle1Pos[1]-circle2Pos[1]) - ja1
+    ja3 = np.arctan2(circle2Pos[0]-circle3Pos[0], circle2Pos[1]-circle3Pos[1]) - ja2 - ja1
+    return np.array([ja1, ja2, ja3])
+
+
+  # Recieve data, process it, and publish
+  def callback(self,data):
+    # Recieve the image
+    try:
+      cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+    except CvBridgeError as e:
+      print(e)
+
+    # Perform image processing task (your code goes here)
+    # The image is loaded as cv_imag
+
+    # Uncomment if you want to save the image
+    #cv2.imwrite('image_copy.png', cv_image)
+
+    a = self.detect_joint_angles(cv_image)
+    cv2.imshow('window', cv_image)
+    cv2.waitKey(3)
+
+    print(a)
+
+    self.joints = Float64MultiArray()
+    self.joints.data = a
+
+    # Publish the results
+    try:
+      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+      self.joints_pub.publish(self.joints)
+    except CvBridgeError as e:
+      print(e)
+>>>>>>> print data
 
 # call the class
 def main(args):

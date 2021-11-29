@@ -15,14 +15,11 @@ class image_converter:
 
   # Defines publisher and subscriber
   def __init__(self):
-<<<<<<< HEAD
     rospy.init_node('joint_angle_publisher', anonymous=True)
     self.joint2_pub = rospy.Publisher("joint_angle_2",Float64, queue_size = 1)
     self.joint3_pub = rospy.Publisher("joint_angle_3",Float64, queue_size = 1)
     self.joint4_pub = rospy.Publisher("joint_angle_4",Float64, queue_size = 1)
-=======
     rospy.init_node('image_processing', anonymous=True)
->>>>>>> added init node
     # initialize the bridge between openCV and ROS
     self.bridge = CvBridge()
     # initialize a publisher to send messages to a topic named image_topic

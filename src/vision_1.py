@@ -146,7 +146,6 @@ class image_converter:
     bluePos = a * self.detect_blue(image)
     redPos = a * self.detect_red(image)
     # Solve using trigonometry
-<<<<<<< HEAD
     ja3 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
     return np.array([ja3])
     # ja1 = np.arctan2(greenPos[0]- yellowPos[0], greenPos[1] - yellowPos[1])
@@ -169,7 +168,6 @@ class image_converter:
     # ja2 = np.arctan2(yellowPos[0]-bluePos[0], yellowPos[1]-bluePos[1]) - ja1
     # ja3 = np.arctan2(redPos[0]-bluePos[0], redPos[1]-bluePos[1]) - ja2 - ja1
     # return np.array([ja1, ja2, ja3])
-=======
     ja1 = np.arctan2(center[0]- circle1Pos[0], center[1] - circle1Pos[1])
     ja2 = np.arctan2(circle1Pos[0]-circle2Pos[0], circle1Pos[1]-circle2Pos[1]) - ja1
     ja3 = np.arctan2(circle2Pos[0]-circle3Pos[0], circle2Pos[1]-circle3Pos[1]) - ja2 - ja1
@@ -205,7 +203,6 @@ class image_converter:
       self.joints_pub.publish(self.joints)
     except CvBridgeError as e:
       print(e)
->>>>>>> print data
 
 # call the class
 def main(args):

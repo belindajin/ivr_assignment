@@ -106,8 +106,8 @@ class image_converter:
     redPos = np.array([redPos2[0], redPos1[0], (redPos1[1] + redPos2[1]) / 2])
 
     # find joint arm vectors
-    yellowBlue = bluePos - yellowPos - greenPos
-    blueRed = redPos - bluePos - greenPos
+    yellowBlue = bluePos - yellowPos
+    blueRed = redPos - bluePos
 
     print(yellowBlue)
     print(blueRed)

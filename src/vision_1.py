@@ -141,7 +141,7 @@ class image_converter:
     elif joint2 < -np.pi/2:
         joint2 = joint2 - np.pi
 
-    if blue[0] < 0:
+    if bluePos[0] < 0:
         joint2 = -joint2
 
     joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 1, 0]))) / (np.linalg.norm(yellowBlue) + np.linalg.norm(np.array([0, 1, 0])))) - np.pi/2

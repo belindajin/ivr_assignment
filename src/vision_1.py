@@ -109,6 +109,9 @@ class image_converter:
     yellowBlue = bluePos - yellowPos - greenPos
     blueRed = redPos - bluePos - greenPos
 
+    print(yellowBlue)
+    print(blueRed)
+
     # find x-axis after joint 2 rotation
     newX = np.cross(yellowBlue, np.array([0, 1, 0]))
 

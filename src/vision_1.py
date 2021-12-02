@@ -146,11 +146,11 @@ class image_converter:
         print(e)
 
     # Publish the results
-    try:
-      #self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-      #self.joints_pub.publish(self.joints)
-    except CvBridgeError as e:
-        print(e)
+    # try:
+    #     self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+    #     self.joints_pub.publish(self.joints)
+    # except CvBridgeError as e:
+    #     print(e)
 
   def camera2_callback(self,data):
     # Recieve the image
@@ -169,11 +169,11 @@ class image_converter:
     # self.joint_angle4.data =
 
     # Publish the results
-    try:
-      #self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-      #self.joints_pub.publish(self.joints)
-    except CvBridgeError as e:
-        print(e)
+    # try:
+    #   self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+    #   self.joints_pub.publish(self.joints)
+    # except CvBridgeError as e:
+    #     print(e)
 
 # call the class
 def main(args):

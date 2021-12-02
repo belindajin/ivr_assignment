@@ -122,13 +122,7 @@ class image_converter:
     joint4 = np.arccos((np.dot(yellowBlue, blueRed)) /
         (np.linalg.norm(yellowBLue) + np.linalg.norm(blueRed)))
 
-    # Solve using trigonometry
-    # ja3 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
-    # return np.array([ja3])
-    # ja1 = np.arctan2(greenPos[0]- yellowPos[0], greenPos[1] - yellowPos[1])
-    # ja2 = np.arctan2(yellowPos[0]-bluePos[0], yellowPos[1]-bluePos[1]) - ja1
-    # ja3 = np.arctan2(redPos[0]-bluePos[0], redPos[1]-bluePos[1]) - ja2 - ja1
-    # return np.array([ja1, ja2, ja3])
+    return [joint2, joint3, joint4]
 
   # Recieve data, process it, and publish
   def camera1_callback(self,data):
@@ -138,14 +132,21 @@ class image_converter:
     except CvBridgeError as e:
       print(e)
 
-    #code for camera 1 callback
+    # code for camera 1 callback
+    try:
+        joints = self.detect_joint_angles()
+        self.joint_angle2 = Float64()
+        self.joint_angle2.data = joints[0]
+        self.joint_angle3 = Float64()
+        self.joint_angle3.data = joints[1]
+        self.joint_angle4 = Float64()
+        self.joint_angle4.data = joints[2]
 
-    # self.joint_angle2 = Float64()
-    # self.joint_angle2.data =
-    # self.joint_angle3 = Float64()
-    # self.joint_angle3.data =
-    # self.joint_angle4 = Float64()
-    # self.joint_angle4.data =
+        self.joint2_pub.publish(self.joint_angle2.data)
+        self.joint3_pub.publish(self.joint_angle3.data)
+        self.joint4_pub.publish(self.joint_angle4.data)
+    except CvBridgeError as e:
+        print(e)
 
     # Publish the results
     try:

@@ -30,60 +30,6 @@ class image_converter:
     self.image_sub1 = rospy.Subscriber("/camera1/robot/image_raw",Image, self.camera1_callback)
     self.image_sub2 = rospy.Subscriber("/camera2/robot/image_raw",Image, self.camera2_callback)
 
-
-
-
-  # Recieve data, process it, and publish
-  def camera1_callback(self,data):
-    # Recieve the image
-    try:
-      image_camera1 = self.bridge.imgmsg_to_cv2(data, "bgr8")
-    except CvBridgeError as e:
-      print(e)
-
-    #code for camera 1 callback
-
-    self.joint_angle2 = Float64()
-    self.joint_angle2.data =
-    self.joint_angle3 = Float64()
-    self.joint_angle3.data =
-    self.joint_angle4 = Float64()
-    self.joint_angle4.data =
-
-    # Publish the results
-    try:
-      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-      self.joints_pub.publish(self.joints)
-    except CvBridgeError as e:
-        print(e)
-
-
-
-  def camera2_callback(self,data):
-    # Recieve the image
-    try:
-      image_camera2 = self.bridge.imgmsg_to_cv2(data, "bgr8")
-    except CvBridgeError as e:
-      print(e)
-
-    #code for camera 2 callback
-
-    self.joint_angle2 = Float64()
-    self.joint_angle2.data =
-    self.joint_angle3 = Float64()
-    self.joint_angle3.data =
-    self.joint_angle4 = Float64()
-    self.joint_angle4.data =
-
-    # Publish the results
-    try:
-      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-      self.joints_pub.publish(self.joints)
-    except CvBridgeError as e:
-        print(e)
-
-
-
   #detect the center of the joints in vertical and horizontal position
   def detect_red(self,image):
       mask = cv2.inRange(image, (0, 0, 100), (0, 0, 255))
@@ -135,41 +81,42 @@ class image_converter:
       print(e)
 
   # Calculate the relevant joint angles from the image
-  def detect_joint_angles_1(self,image):
-    a = self.pixel2meter(image)
+  def detect_joint_angles(self):
+
+    # meter conversion constants
+    a = self.pixel2meter(self.image_camera1)
+    b = self.pixel2meter(self.image_camera2)
+
     # Obtain the centre of each coloured blob
-    greenPos = a * self.detect_green(image)
-    yellowPos = a * self.detect_yellow(image)
-    bluePos = a * self.detect_blue(image)
-    redPos = a * self.detect_red(image)
+    greenPos1 = a * self.detect_green(self.image_camera1)
+    greenPos2 = a * self.detect_green(self.image_camera2)
+
+    yellowPos1 = a * self.detect_yellow(self.image_camera1)
+    yellowPos2 = a * self.detect_yellow(self.image_camera2)
+
+    bluePos1 = a * self.detect_blue(self.image_camera1)
+    bluePos2 = a * self.detect_blue(self.image_camera2)
+
+    redPos1 = a * self.detect_red(self.image_camera1)
+    redPos2 = a * self.detect_red(self.image_camera1)
+
+    greenPos = np.array([greenPos2[0], greenPos1[0], (greenPos1[1] + greenPos2[1]) / 2])
+    yellowPos = np.array([yellowPos2[0], yellowPos1[0], (yellowPos1[1] + yellowPos2[1]) / 2])
+    bluePos = np.array([bluePos2[0], bluePos1[0], (bluePos1[1] + bluePos2[1]) / 2])
+    redPos = np.array([redPos2[0], redPos1[0], (redPos1[1] + redPos2[1]) / 2])
+
+    yellowBlue = bluePos - yellowPos
+    blueRed = redPos - bluePos
+
+    
+
     # Solve using trigonometry
-    ja3 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
-    return np.array([ja3])
+    # ja3 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
+    # return np.array([ja3])
     # ja1 = np.arctan2(greenPos[0]- yellowPos[0], greenPos[1] - yellowPos[1])
     # ja2 = np.arctan2(yellowPos[0]-bluePos[0], yellowPos[1]-bluePos[1]) - ja1
     # ja3 = np.arctan2(redPos[0]-bluePos[0], redPos[1]-bluePos[1]) - ja2 - ja1
     # return np.array([ja1, ja2, ja3])
-
-  def detect_joint_angles_2(self,image):
-    a = self.pixel2meter(image)
-    # Obtain the centre of each coloured blob
-    greenPos = a * self.detect_green(image)
-    yellowPos = a * self.detect_yellow(image)
-    bluePos = a * self.detect_blue(image)
-    redPos = a * self.detect_red(image)
-    # Solve using trigonometry
-    ja2 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])
-    ja4 = np.arctan2(redPos[0] - bluePos[0], redPos[1] - bluePos[1])
-    return np.array([ja2, ja4])
-    # ja1 = np.arctan2(greenPos[0]- yellowPos[0], greenPos[1] - yellowPos[1])
-    # ja2 = np.arctan2(yellowPos[0]-bluePos[0], yellowPos[1]-bluePos[1]) - ja1
-    # ja3 = np.arctan2(redPos[0]-bluePos[0], redPos[1]-bluePos[1]) - ja2 - ja1
-    # return np.array([ja1, ja2, ja3])
-    ja1 = np.arctan2(center[0]- circle1Pos[0], center[1] - circle1Pos[1])
-    ja2 = np.arctan2(circle1Pos[0]-circle2Pos[0], circle1Pos[1]-circle2Pos[1]) - ja1
-    ja3 = np.arctan2(circle2Pos[0]-circle3Pos[0], circle2Pos[1]-circle3Pos[1]) - ja2 - ja1
-    return np.array([ja1, ja2, ja3])
-
 
   # Recieve data, process it, and publish
   def callback(self,data):
@@ -200,6 +147,53 @@ class image_converter:
       self.joints_pub.publish(self.joints)
     except CvBridgeError as e:
       print(e)
+
+  # Recieve data, process it, and publish
+  def camera1_callback(self,data):
+    # Recieve the image
+    try:
+      self.image_camera1 = self.bridge.imgmsg_to_cv2(data, "bgr8")
+    except CvBridgeError as e:
+      print(e)
+
+    #code for camera 1 callback
+
+    # self.joint_angle2 = Float64()
+    # self.joint_angle2.data =
+    # self.joint_angle3 = Float64()
+    # self.joint_angle3.data =
+    # self.joint_angle4 = Float64()
+    # self.joint_angle4.data =
+
+    # Publish the results
+    try:
+      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+      self.joints_pub.publish(self.joints)
+    except CvBridgeError as e:
+        print(e)
+
+  def camera2_callback(self,data):
+    # Recieve the image
+    try:
+      self.image_camera2 = self.bridge.imgmsg_to_cv2(data, "bgr8")
+    except CvBridgeError as e:
+      print(e)
+
+    #code for camera 2 callback
+
+    # self.joint_angle2 = Float64()
+    # self.joint_angle2.data =
+    # self.joint_angle3 = Float64()
+    # self.joint_angle3.data =
+    # self.joint_angle4 = Float64()
+    # self.joint_angle4.data =
+
+    # Publish the results
+    try:
+      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+      self.joints_pub.publish(self.joints)
+    except CvBridgeError as e:
+        print(e)
 
 # call the class
 def main(args):

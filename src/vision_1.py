@@ -38,9 +38,10 @@ class image_converter:
       M = cv2.moments(mask)
       if M['m00'] == 0:
           return np.array([-1, -1])
-      c_horizontal = int(M['m10'] / M['m00'])
-      c_vertical = int(M['m01'] / M['m00'])
-      return np.array([c_horizontal, c_vertical])
+      else:
+          c_horizontal = int(M['m10'] / M['m00'])
+          c_vertical = int(M['m01'] / M['m00'])
+          return np.array([c_horizontal, c_vertical])
 
 
   def detect_blue(self,image):
@@ -50,9 +51,10 @@ class image_converter:
       M = cv2.moments(mask)
       if M['m00'] == 0:
           return np.array([-1, -1])
-      c_horizontal = int(M['m10'] / M['m00'])
-      c_vertical = int(M['m01'] / M['m00'])
-      return np.array([c_horizontal, c_vertical])
+      else:
+          c_horizontal = int(M['m10'] / M['m00'])
+          c_vertical = int(M['m01'] / M['m00'])
+          return np.array([c_horizontal, c_vertical])
 
   # Detecting the centre of the yellow circle
   def detect_yellow(self,image):

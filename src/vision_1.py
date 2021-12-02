@@ -105,10 +105,22 @@ class image_converter:
     bluePos = np.array([bluePos2[0], bluePos1[0], (bluePos1[1] + bluePos2[1]) / 2])
     redPos = np.array([redPos2[0], redPos1[0], (redPos1[1] + redPos2[1]) / 2])
 
-    yellowBlue = bluePos - yellowPos
-    blueRed = redPos - bluePos
+    # find joint arm vectors
+    yellowBlue = bluePos - yellowPos - greenPos
+    blueRed = redPos - bluePos - greenPos
 
+    # find x-axis after joint 2 rotation
+    newX = np.cross(yellowBlue, np.array([0, 1, 0]))
 
+    # find angle of joints
+    joint2 = np.arccos((np.dot(newX, np.array([1, 0, 0]))) /
+        (np.linalg.norm(newX) + np.linalg.norm(np.array([1, 0, 0])))
+
+    joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 1, 0]))) /
+        (np.linalg.norm(yellowBlue) + np.linalg.norm(np.array([0, 1, 0]))))
+
+    joint4 = np.arccos((np.dot(yellowBlue, blueRed)) /
+        (np.linalg.norm(yellowBLue) + np.linalg.norm(blueRed)))
 
     # Solve using trigonometry
     # ja3 = np.arctan2(bluePos[0] - yellowPos[0], bluePos[1] - yellowPos[1])

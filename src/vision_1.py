@@ -36,6 +36,8 @@ class image_converter:
       kernel = np.ones((5, 5), np.uint8)
       mask = cv2.dilate(mask, kernel, iterations=3)
       M = cv2.moments(mask)
+      if M['m00'] == 0:
+          return np.array([-1, -1])
       c_horizontal = int(M['m10'] / M['m00'])
       c_vertical = int(M['m01'] / M['m00'])
       return np.array([c_horizontal, c_vertical])
@@ -46,6 +48,8 @@ class image_converter:
       kernel = np.ones((5, 5), np.uint8)
       mask = cv2.dilate(mask, kernel, iterations=3)
       M = cv2.moments(mask)
+      if M['m00'] == 0:
+          return np.array([-1, -1])
       c_horizontal = int(M['m10'] / M['m00'])
       c_vertical = int(M['m01'] / M['m00'])
       return np.array([c_horizontal, c_vertical])
@@ -97,8 +101,20 @@ class image_converter:
     bluePos1 = a * self.detect_blue(self.image_camera1)
     bluePos2 = a * self.detect_blue(self.image_camera2)
 
+    # blue blocked by yellow
+    if bluePos1[0] == -1:
+        bluePos1 = yellowPos1
+    if bluePos2[0] == -1:
+        bluePos2 = yellowPos2
+
     redPos1 = a * self.detect_red(self.image_camera1)
     redPos2 = a * self.detect_red(self.image_camera1)
+
+    # red blocked by blue
+    if redPos1[0] == -1:
+        redPos1 = bluePos1
+    if redPos2[0] == -1:
+        redPos2 = bluePos2
 
     greenPos = np.array([greenPos2[0], greenPos1[0], (greenPos1[1] + greenPos2[1]) / 2])
     yellowPos = np.array([yellowPos2[0], yellowPos1[0], (yellowPos1[1] + yellowPos2[1]) / 2])

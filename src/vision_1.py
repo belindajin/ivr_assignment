@@ -197,6 +197,11 @@ class image_converter:
 
     joint4 = np.arccos((np.dot(yellowBlue, blueRed)) / (np.linalg.norm(yellowBlue) + np.linalg.norm(blueRed)))
 
+    if joint4 > np.pi/2:
+        joint4 = np.pi - joint4
+    elif joint4 < -np.pi/2:
+        joint4 = joint4 - np.pi
+
     return [joint2, joint3, joint4]
 
   # Recieve data, process it, and publish

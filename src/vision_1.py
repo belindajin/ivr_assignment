@@ -35,6 +35,21 @@ class image_converter:
     self.image_sub1 = rospy.Subscriber("/camera1/robot/image_raw",Image, self.camera1_callback)
     self.image_sub2 = rospy.Subscriber("/camera2/robot/image_raw",Image, self.camera2_callback)
 
+    rospy.init_node('joints_publisher', anonymous=True)
+    pub2 = rospy.Publisher("/robot/joint2_position_controller/command", Float64, queue_size = 10)
+    pub3 = rospy.Publisher("/robot/joint3_position_controller/command", Float64, queue_size = 10)
+    pub4 = rospy.Publisher("/robot/joint4_position_controller/command", Float64, queue_size = 10)
+
+    while not rospy.is_shutdown():
+        t = rospy.get_time()
+        joint2 = np.pi /2 * np.sin(np.pi/15 *t)
+        joint3 = np.pi /2 * np.sin(np.pi/20 *t)
+        joint4 = np.pi /2 * np.sin(np.pi/18 *t)
+
+        pub2.publish(joint2)
+        pub3.publish(joint3)
+        pub4.publish(joint4)
+
   #detect the center of the joints in vertical and horizontal position
   def detect_red(self,image):
       mask = cv2.inRange(image, (0, 0, 100), (0, 0, 255))

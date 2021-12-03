@@ -35,7 +35,6 @@ class image_converter:
     self.image_sub1 = rospy.Subscriber("/camera1/robot/image_raw",Image, self.camera1_callback)
     self.image_sub2 = rospy.Subscriber("/camera2/robot/image_raw",Image, self.camera2_callback)
 
-    rospy.init_node('joints_publisher', anonymous=True)
     pub2 = rospy.Publisher("/robot/joint2_position_controller/command", Float64, queue_size = 10)
     pub3 = rospy.Publisher("/robot/joint3_position_controller/command", Float64, queue_size = 10)
     pub4 = rospy.Publisher("/robot/joint4_position_controller/command", Float64, queue_size = 10)

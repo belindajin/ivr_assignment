@@ -10,6 +10,11 @@ from sensor_msgs.msg import Image
 from std_msgs.msg import Float64MultiArray, Float64
 from cv_bridge import CvBridge, CvBridgeError
 
+redPrev1 = np.array([0, 0])
+redPrev2 = np.array([0, 0])
+
+bluePrev1 = np.array([0, 0])
+bluePrev2 = np.array([0, 0])
 
 class image_converter:
 
@@ -103,22 +108,26 @@ class image_converter:
     bluePos1 = a * self.detect_blue(self.image_camera1)
     bluePos2 = a * self.detect_blue(self.image_camera2)
 
-    # blue blocked by yellow
+    # blue blocked
     if bluePos1[0] == -1:
-        bluePos1 = yellowPos1
-        bluePos1[1] = bluePos2[1]
+        bluePos1 = bluePrev1
     if bluePos2[0] == -1:
-        bluePos2 = yellowPos2
-        bluePos2[1] = bluePos1[1]
+        bluePos2 = bluePrev2
+
+    bluePrev1 = bluePos1
+    bluePrev2 = bluePrev2
 
     redPos1 = a * self.detect_red(self.image_camera1)
     redPos2 = a * self.detect_red(self.image_camera1)
 
-    # red blocked by blue
+    # red blocked
     if redPos1[0] == -1:
-        redPos1 = bluePos1
+        redPos1 = redPrev1
     if redPos2[0] == -1:
-        redPos2 = bluePos2
+        redPos2 = redPrev2
+
+    redPrev1 = redPos1
+    redPrev2 = redPrev2
 
     greenPos = np.array([greenPos2[0], greenPos1[0], (greenPos1[1] + greenPos2[1]) / 2])
     yellowPos = np.array([yellowPos2[0], yellowPos1[0], (yellowPos1[1] + yellowPos2[1]) / 2])

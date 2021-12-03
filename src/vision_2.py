@@ -173,7 +173,7 @@ class image_converter:
 
     if joint4 > np.pi/2:
         joint4 = np.pi - joint4
-    if np.dot(blueRed, newX) < 0:
+    if np.dot(blueRed, np.array([1, 0, 0])) < 0:
         print('something')
         joint4 = -joint4
 

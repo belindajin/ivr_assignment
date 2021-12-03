@@ -102,15 +102,14 @@ class image_converter:
       dist = np.sum((circle1Pos - circle2Pos)**2)
       return 4 / np.sqrt(dist)
 
-
-      print(e)
-
   # Calculate the relevant joint angles from the image
   def detect_joint_angles(self):
 
     # meter conversion constants
     a = self.pixel2meter(self.image_camera1)
     b = self.pixel2meter(self.image_camera2)
+    print(a)
+    print(b)
 
     # Obtain the centre of each coloured blob
     greenPos1 = a * self.detect_green(self.image_camera1)

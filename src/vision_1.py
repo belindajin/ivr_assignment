@@ -133,8 +133,19 @@ class image_converter:
 
     greenPos = np.array([greenPos2[0], greenPos1[0], (greenPos1[1] + greenPos2[1]) / 2])
     yellowPos = np.array([yellowPos2[0], yellowPos1[0], (yellowPos1[1] + yellowPos2[1]) / 2])
-    bluePos = np.array([bluePos2[0], bluePos1[0], (bluePos1[1] + bluePos2[1]) / 2])
-    redPos = np.array([redPos2[0], redPos1[0], (redPos1[1] + redPos2[1]) / 2])
+
+    bluePos = np.array([bluePos2[0] - greenPos[0], bluePos1[0] - greenPos[1], 0])
+    redPos = np.array([redPos2[0] - greenPos[0], redPos1[0] - greenPos[1], 0])
+
+    if yellowPos[2] > bluePos1[1] and yellowPos[2] > bluePos2[1]:
+        bluePos[2] = -(bluePos1[1] + bluePos2[1]) + 2 * greenPos[2]) / 2]
+    else:
+        bluePos[2] = yellowPos[2]
+
+    if yellowPos[2] > redPos1[1] and yellowPos[2] > redPos2[1]:
+        redPos[2] = -(redPos1[1] + redPos2[1]) + 2 * greenPos[2]) / 2]
+    else:
+        redPos[2] = yellowPos[2])
 
     # find joint arm vectors
     yellowBlue = bluePos - yellowPos

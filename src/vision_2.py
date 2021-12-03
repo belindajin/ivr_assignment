@@ -45,7 +45,7 @@ class image_converter:
         joint3 = np.pi /2 * np.sin(np.pi/20 *t)
         joint4 = np.pi /2 * np.sin(np.pi/18 *t)
 
-        pub2.publish(joint1)
+        pub1.publish(joint1)
         pub3.publish(joint3)
         pub4.publish(joint4)
 

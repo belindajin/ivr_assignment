@@ -106,8 +106,10 @@ class image_converter:
     # blue blocked by yellow
     if bluePos1[0] == -1:
         bluePos1 = yellowPos1
+        bluePos1[2] = bluePos2[2]
     if bluePos2[0] == -1:
         bluePos2 = yellowPos2
+        bluePos2[2] = bluePos1[2]
 
     redPos1 = a * self.detect_red(self.image_camera1)
     redPos2 = a * self.detect_red(self.image_camera1)

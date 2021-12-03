@@ -166,8 +166,6 @@ class image_converter:
 
     # find angle of joints
     joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 0, 1]))) / (np.linalg.norm(yellowBlue) * np.linalg.norm(np.array([0, 0, 1]))))
-    # if np.abs(joint3Prev[0] - joint3) > np.abs(joint3Prev[0] + joint3):
-    #     joint3 = -joint3
 
     joint4 = np.arccos((np.dot(yellowBlue, blueRed)) / (np.linalg.norm(yellowBlue) * np.linalg.norm(blueRed)))
 
@@ -179,22 +177,6 @@ class image_converter:
 
     yellowBlue2D = np.array([yellowBlue[0], yellowBlue[1]])
     joint1 = np.pi - (np.arccos((np.dot(yellowBlue2D, np.array([0, 1]))) / (np.linalg.norm(yellowBlue2D) * np.linalg.norm(np.array([0, 1])))))
-    # if np.abs(joint1Prev[0] - joint1) > np.abs(joint1Prev[0] + joint1):
-    #     joint1 = -joint1
-
-    # if bluePos1[0] < yellowPos1[0]: # either both pos or both neg
-    #     intPos = np.abs(joint1Prev[0] - joint1) + np.abs(joint3Prev[0] - joint3)
-    #     intNeg = np.abs(joint1Prev[0] + joint1) + np.abs(joint3Prev[0] + joint3)
-    #     if intPos > intNeg:
-    #         joint3 = -joint3
-    #         joint1 = -joint1
-    # else:
-    #     intJoint1 = np.abs(joint1Prev[0] - joint1) - np.abs(joint1Prev[0] + joint1)
-    #     intJoint3 = np.abs(joint3Prev[0] - joint3) - np.abs(joint3Prev[0] + joint3)
-    #     if intJoint1 > intJoint3:
-    #         joint1 = -joint1
-    #     else:
-    #         joint3 = -joint3
 
     joint1Prev[0] = joint1
     joint3Prev[0] = joint3
@@ -225,35 +207,12 @@ class image_converter:
     except CvBridgeError as e:
         print(e)
 
-    # Publish the results
-    # try:
-    #     self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-    #     self.joints_pub.publish(self.joints)
-    # except CvBridgeError as e:
-    #     print(e)
-
   def camera2_callback(self,data):
     # Recieve the image
     try:
       self.image_camera2 = self.bridge.imgmsg_to_cv2(data, "bgr8")
     except CvBridgeError as e:
       print(e)
-
-    #code for camera 2 callback
-
-    # self.joint_angle2 = Float64()
-    # self.joint_angle2.data =
-    # self.joint_angle3 = Float64()
-    # self.joint_angle3.data =
-    # self.joint_angle4 = Float64()
-    # self.joint_angle4.data =
-
-    # Publish the results
-    # try:
-    #   self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
-    #   self.joints_pub.publish(self.joints)
-    # except CvBridgeError as e:
-    #     print(e)
 
 # call the class
 def main(args):

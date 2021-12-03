@@ -175,7 +175,7 @@ class image_converter:
         joint4 = -joint4
 
     yellowBlue2D = np.array([yellowBlue[0], yellowBlue[1]])
-    joint1 = np.arccos((np.dot(np.array([0, 1]), yellowBlue2D)) / (np.linalg.norm(yellowBlue2D) * np.linalg.norm(np.array([0, 1]))))
+    joint1 = np.pi - (np.arccos((np.dot(yellowBlue2D, np.array([0, 1]))) / (np.linalg.norm(yellowBlue2D) * np.linalg.norm(np.array([0, 1])))))
     # if np.abs(joint1Prev[0] - joint1) > np.abs(joint1Prev[0] + joint1):
     #     joint1 = -joint1
 

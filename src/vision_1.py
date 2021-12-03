@@ -114,7 +114,7 @@ class image_converter:
     if bluePos2[0] == -1:
         bluePos2 = bluePrev2
 
-    for i in redPos1:
+    for i in bluePos1:
         bluePrev1[i] = bluePos1[i]
         bluePrev2[i] = bluePos2[i]
 

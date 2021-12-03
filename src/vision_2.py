@@ -44,7 +44,7 @@ class image_converter:
 
     while not rospy.is_shutdown():
         t = rospy.get_time()
-        joint1 = np.pi /2 * np.sin(np.pi/28 *t)
+        joint1 = np.abs(np.pi /2 * np.sin(np.pi/28 *t))
         joint3 = np.abs(np.pi /2 * np.sin(np.pi/20 *t))
         joint4 = np.pi /2 * np.sin(np.pi/18 *t)
 

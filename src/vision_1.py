@@ -143,6 +143,10 @@ class image_converter:
     print(yellowBlue)
     print(blueRed)
 
+    print(np.linalg.norm(yellowBlue))
+    print(np.linalg.norm(blueRed))
+
+
     # find x-axis after joint 2 rotation
     newX = np.cross(yellowBlue, np.array([0, 1, 0]))
 

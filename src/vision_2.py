@@ -165,7 +165,7 @@ class image_converter:
     newX = np.cross(np.array([0, 1, 0]), yellowBlue)
 
     # find angle of joints
-    joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 0, 1]))) / (np.linalg.norm(yellowBlue) * np.linalg.norm(np.array([0, 0, 1]))))
+    joint3 = np.arccos((np.dot(np.array([0, 0, 1]), yellowBlue)) / (np.linalg.norm(yellowBlue) * np.linalg.norm(np.array([0, 0, 1]))))
     # if np.abs(joint3Prev[0] - joint3) > np.abs(joint3Prev[0] + joint3):
     #     joint3 = -joint3
 

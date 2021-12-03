@@ -175,7 +175,7 @@ class image_converter:
     newX = np.cross(np.array([0, 1, 0]), yellowBlue)
 
     # find angle of joints
-    joint2 = np.arccos((np.dot(newX, np.array([1, 0, 0]))) / (np.linalg.norm(newX) + np.linalg.norm(np.array([1, 0, 0]))))
+    joint2 = np.arccos((np.dot(newX, np.array([1, 0, 0]))) / (np.linalg.norm(newX) * np.linalg.norm(np.array([1, 0, 0]))))
 
     if joint2 > np.pi/2:
         joint2 = np.pi - joint2
@@ -185,14 +185,14 @@ class image_converter:
     if bluePos[0] < 0:
         joint2 = -joint2
 
-    joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 1, 0]))) / (np.linalg.norm(yellowBlue) + np.linalg.norm(np.array([0, 1, 0])))) - np.pi/2
+    joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 1, 0]))) / (np.linalg.norm(yellowBlue) * np.linalg.norm(np.array([0, 1, 0])))) - np.pi/2
 
     if joint3 > np.pi/2:
         joint3 = np.pi - joint3
     elif joint3 < -np.pi/2:
         joint3 = joint3 - np.pi
 
-    joint4 = np.arccos((np.dot(yellowBlue, blueRed)) / (np.linalg.norm(yellowBlue) + np.linalg.norm(blueRed)))
+    joint4 = np.arccos((np.dot(yellowBlue, blueRed)) / (np.linalg.norm(yellowBlue) * np.linalg.norm(blueRed)))
 
     if joint4 > np.pi/2:
         joint4 = np.pi - joint4

@@ -140,12 +140,12 @@ class image_converter:
     if yellowPos[2] > bluePos1[1] and yellowPos[2] > bluePos2[1]:
         bluePos[2] = greenPos[2] - ((bluePos1[1] + bluePos2[1]) / 2)
     else:
-        bluePos[2] = yellowPos[2] - greenPos[2]
+        bluePos[2] = greenPos[2] - yellowPos[2]
 
     if yellowPos[2] > redPos1[1] and yellowPos[2] > redPos2[1]:
         redPos[2] = greenPos[2] - ((redPos1[1] + redPos2[1]) / 2)
     else:
-        redPos[2] = yellowPos[2] - greenPos[2]
+        redPos[2] = greenPos[2] - yellowPos[2]
 
     # find joint arm vectors
     yellowBlue = bluePos - yellowPos

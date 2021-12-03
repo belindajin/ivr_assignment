@@ -16,8 +16,8 @@ redPrev2 = np.array([0, 0])
 bluePrev1 = np.array([0, 0])
 bluePrev2 = np.array([0, 0])
 
-joint1Prev = 0
-joint3Prev = 0
+joint1Prev = 0.0
+joint3Prev = 0.0
 
 class image_converter:
 

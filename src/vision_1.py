@@ -115,7 +115,7 @@ class image_converter:
         bluePos2 = bluePrev2
 
     bluePrev1 = bluePos1
-    bluePrev2 = bluePrev2
+    bluePrev2 = bluePos2
 
     redPos1 = a * self.detect_red(self.image_camera1)
     redPos2 = a * self.detect_red(self.image_camera1)
@@ -230,7 +230,7 @@ def main(args):
   bluePrev2 = np.array([0, 0])
 
   ic = image_converter()
-  
+
   try:
     rospy.spin()
   except KeyboardInterrupt:

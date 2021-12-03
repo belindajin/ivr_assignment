@@ -167,6 +167,7 @@ class image_converter:
     # find angle of joints
     joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 0, 1]))) / (np.linalg.norm(yellowBlue) * np.linalg.norm(np.array([0, 0, 1]))))
     print(joint3Prev)
+    print('this is working')
     if np.abs(joint3Prev - joint3) > np.abs(joint3Prev + joint3):
         joint3 = -joint3
 

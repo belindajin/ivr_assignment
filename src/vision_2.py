@@ -169,7 +169,7 @@ class image_converter:
     if np.dot(blueRed, newX) < 0:
         joint4 = -joint4
 
-    yellowBlue2D = np.array(yellowBlue[0], yellowBlue[1])
+    yellowBlue2D = np.array([yellowBlue[0], yellowBlue[1]])
     joint1 = np.arccos((np.dot(np.array(yellowBlue2D, np.array([0, 1]))) / (np.linalg.norm(yellowBlue2D) * np.linalg.norm(np.array([0, 1])))))
     print(joint1)
 

@@ -114,8 +114,9 @@ class image_converter:
     if bluePos2[0] == -1:
         bluePos2 = bluePrev2
 
-    bluePrev1 = bluePos1
-    bluePrev2 = bluePos2
+    for i in redPos1:
+        bluePrev1[i] = bluePos1[i]
+        bluePrev2[i] = bluePos2[i]
 
     redPos1 = a * self.detect_red(self.image_camera1)
     redPos2 = a * self.detect_red(self.image_camera1)
@@ -126,8 +127,9 @@ class image_converter:
     if redPos2[0] == -1:
         redPos2 = redPrev2
 
-    redPrev1 = redPos1
-    redPrev2 = redPos2
+    for i in redPos1:
+        redPrev1[i] = redPos1[i]
+        redPrev2[i] = redPos2[i]
 
     greenPos = np.array([greenPos2[0], greenPos1[0], (greenPos1[1] + greenPos2[1]) / 2])
     yellowPos = np.array([yellowPos2[0], yellowPos1[0], (yellowPos1[1] + yellowPos2[1]) / 2])

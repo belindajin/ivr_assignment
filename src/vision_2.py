@@ -16,6 +16,9 @@ redPrev2 = np.array([0, 0])
 bluePrev1 = np.array([0, 0])
 bluePrev2 = np.array([0, 0])
 
+joint1Prev = 0
+joint3Prev = 0
+
 class image_converter:
 
   # Defines publisher and subscriber
@@ -164,6 +167,9 @@ class image_converter:
     # find angle of joints
     joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 0, 1]))) / (np.linalg.norm(yellowBlue) * np.linalg.norm(np.array([0, 0, 1]))))
 
+    if np.abs(joint3Prev - joint3) > np.abs(joint3Prev + joint3):
+        joint3 = -joint3
+
     joint4 = np.arccos((np.dot(yellowBlue, blueRed)) / (np.linalg.norm(yellowBlue) * np.linalg.norm(blueRed)))
 
     if np.dot(blueRed, newX) < 0:
@@ -171,7 +177,12 @@ class image_converter:
 
     yellowBlue2D = np.array([yellowBlue[0], yellowBlue[1]])
     joint1 = np.arccos((np.dot(yellowBlue2D, np.array([0, 1]))) / (np.linalg.norm(yellowBlue2D) * np.linalg.norm(np.array([0, 1]))))
-    print(joint1)
+
+    if np.abs(joint1Prev - joint1) > np.abs(joint1Prev + joint1):
+        joint1 = -joint1
+
+    joint1Prev = joint1
+    joint4Prev = joint4
 
     return [joint1, joint3, joint4]
 

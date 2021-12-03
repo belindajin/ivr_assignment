@@ -182,7 +182,7 @@ class image_converter:
         joint1 = -joint1
 
     joint1Prev = joint1
-    joint4Prev = joint4
+    joint3Prev = joint3
 
     return [joint1, joint3, joint4]
 

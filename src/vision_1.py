@@ -222,7 +222,15 @@ class image_converter:
 
 # call the class
 def main(args):
+
+  redPrev1 = np.array([0, 0])
+  redPrev2 = np.array([0, 0])
+
+  bluePrev1 = np.array([0, 0])
+  bluePrev2 = np.array([0, 0])
+
   ic = image_converter()
+  
   try:
     rospy.spin()
   except KeyboardInterrupt:

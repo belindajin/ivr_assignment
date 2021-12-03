@@ -127,7 +127,7 @@ class image_converter:
         redPos2 = redPrev2
 
     redPrev1 = redPos1
-    redPrev2 = redPrev2
+    redPrev2 = redPos2
 
     greenPos = np.array([greenPos2[0], greenPos1[0], (greenPos1[1] + greenPos2[1]) / 2])
     yellowPos = np.array([yellowPos2[0], yellowPos1[0], (yellowPos1[1] + yellowPos2[1]) / 2])

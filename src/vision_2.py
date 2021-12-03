@@ -45,7 +45,7 @@ class image_converter:
     while not rospy.is_shutdown():
         t = rospy.get_time()
         joint1 = np.pi /2 * np.sin(np.pi/28 *t)
-        joint3 = np.pi /2 * np.sin(np.pi/20 *t)
+        joint3 = np.abs(np.pi /2 * np.sin(np.pi/20 *t))
         joint4 = np.pi /2 * np.sin(np.pi/18 *t)
 
         pub1.publish(joint1)
@@ -166,8 +166,8 @@ class image_converter:
 
     # find angle of joints
     joint3 = np.arccos((np.dot(yellowBlue, np.array([0, 0, 1]))) / (np.linalg.norm(yellowBlue) * np.linalg.norm(np.array([0, 0, 1]))))
-    # if np.abs(joint3Prev[0] - joint3) > np.abs(joint3Prev[0] + joint3):
-    #     joint3 = -joint3
+    if np.abs(joint3Prev[0] - joint3) > np.abs(joint3Prev[0] + joint3):
+        joint3 = -joint3
 
     joint4 = np.arccos((np.dot(yellowBlue, blueRed)) / (np.linalg.norm(yellowBlue) * np.linalg.norm(blueRed)))
 
@@ -176,7 +176,7 @@ class image_converter:
 
     yellowBlue2D = np.array([yellowBlue[0], yellowBlue[1]])
     joint1 = np.arccos((np.dot(yellowBlue2D, np.array([0, 1]))) / (np.linalg.norm(yellowBlue2D) * np.linalg.norm(np.array([0, 1]))))
-    if yellowBlue[0] < 0:
+    if np.abs(joint1Prev[0] - joint1) > np.abs(joint1Prev[0] + joint1):
         joint1 = -joint1
 
     # if bluePos1[0] < yellowPos1[0]: # either both pos or both neg
@@ -192,9 +192,6 @@ class image_converter:
     #         joint1 = -joint1
     #     else:
     #         joint3 = -joint3
-
-    # if np.abs(joint1Prev[0] - joint1) > np.abs(joint1Prev[0] + joint1):
-    #     joint1 = -joint1
 
     joint1Prev[0] = joint1
     joint3Prev[0] = joint3

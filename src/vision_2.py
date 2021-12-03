@@ -186,7 +186,7 @@ class image_converter:
     else:
         intJoint1 = np.abs(joint1Prev[0] - joint1) - np.abs(joint1Prev[0] + joint1)
         intJoint3 = np.abs(joint3Prev[0] - joint3) - np.abs(joint3Prev[0] + joint3)
-        if intJoint1 > intJoint2:
+        if intJoint1 > intJoint3:
             joint1 = -joint1
         else:
             joint3 = -joint3

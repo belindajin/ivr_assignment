@@ -176,20 +176,22 @@ class image_converter:
 
     yellowBlue2D = np.array([yellowBlue[0], yellowBlue[1]])
     joint1 = np.arccos((np.dot(yellowBlue2D, np.array([0, 1]))) / (np.linalg.norm(yellowBlue2D) * np.linalg.norm(np.array([0, 1]))))
+    if yellowBlue[0] < 0:
+        joint1 = -joint1
 
-    if bluePos1[0] < yellowPos1[0]: # either both pos or both neg
-        intPos = np.abs(joint1Prev[0] - joint1) + np.abs(joint3Prev[0] - joint3)
-        intNeg = np.abs(joint1Prev[0] + joint1) + np.abs(joint3Prev[0] + joint3)
-        if intPos > intNeg:
-            joint3 = -joint3
-            joint1 = -joint1
-    else:
-        intJoint1 = np.abs(joint1Prev[0] - joint1) - np.abs(joint1Prev[0] + joint1)
-        intJoint3 = np.abs(joint3Prev[0] - joint3) - np.abs(joint3Prev[0] + joint3)
-        if intJoint1 > intJoint3:
-            joint1 = -joint1
-        else:
-            joint3 = -joint3
+    # if bluePos1[0] < yellowPos1[0]: # either both pos or both neg
+    #     intPos = np.abs(joint1Prev[0] - joint1) + np.abs(joint3Prev[0] - joint3)
+    #     intNeg = np.abs(joint1Prev[0] + joint1) + np.abs(joint3Prev[0] + joint3)
+    #     if intPos > intNeg:
+    #         joint3 = -joint3
+    #         joint1 = -joint1
+    # else:
+    #     intJoint1 = np.abs(joint1Prev[0] - joint1) - np.abs(joint1Prev[0] + joint1)
+    #     intJoint3 = np.abs(joint3Prev[0] - joint3) - np.abs(joint3Prev[0] + joint3)
+    #     if intJoint1 > intJoint3:
+    #         joint1 = -joint1
+    #     else:
+    #         joint3 = -joint3
 
     # if np.abs(joint1Prev[0] - joint1) > np.abs(joint1Prev[0] + joint1):
     #     joint1 = -joint1

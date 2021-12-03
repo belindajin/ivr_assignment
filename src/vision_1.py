@@ -114,7 +114,7 @@ class image_converter:
     if bluePos2[0] == -1:
         bluePos2 = bluePrev2
 
-    for i in bluePos1:
+    for i in range(len(bluePos1)):
         bluePrev1[i] = bluePos1[i]
         bluePrev2[i] = bluePos2[i]
 
@@ -127,7 +127,7 @@ class image_converter:
     if redPos2[0] == -1:
         redPos2 = redPrev2
 
-    for i in redPos1:
+    for i in range(len(redPos1)):
         redPrev1[i] = redPos1[i]
         redPrev2[i] = redPos2[i]
 
